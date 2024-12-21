@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package ticket;
+
+option go_package = "./ticket";
+
+// Ticket Service 定义
+service TicketService {
+  // 查询剩余票数
+  rpc GetAvailableTickets(GetAvailableTicketsRequest) returns (GetAvailableTicketsResponse);
+
+  // 预订票
+  rpc BookTicket(BookTicketRequest) returns (BookTicketResponse);
+
+  // 取消预订
+  rpc CancelBooking(CancelBookingRequest) returns (CancelBookingResponse);
+}
+
+// 查询剩余票数请求
+message GetAvailableTicketsRequest {
+  string event_id = 1;  // 活动 ID
+}
+
+// 查询剩余票数响应
+message GetAvailableTicketsResponse {
+  int32 available_tickets = 1;  // 剩余票数
+}
+
+// 预订票请求
+message BookTicketRequest {
+  string event_id = 1;  // 活动 ID
+  int32 number_of_tickets = 2;  // 预订票数
+  string user_id = 3;  // 用户 ID
+}
+
+// 预订票响应
+message BookTicketResponse {
+  bool success = 1;  // 是否成功
+  string booking_id = 2;  // 预订 ID
+  string message = 3;  // 消息
+}
+
+// 取消预订请求
+message CancelBookingRequest {
+  string booking_id = 1;  // 预订 ID
+  string user_id = 2;  // 用户 ID
+}
+
+// 取消预订响应
+message CancelBookingResponse {
+  bool success = 1;  // 是否成功
+  string message = 2;  // 消息
+}
